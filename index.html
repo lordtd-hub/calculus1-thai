@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ลิมิตของฟังก์ชัน — แคลคูลัส 1</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous" />
+
+  <link rel="stylesheet" href="css/main.css" />
+  <style>
+    /* local tweaks for home */
+    .home-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+    .stat-tile {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      padding: 0.9rem 1rem;
+      text-align: center;
+    }
+    .stat-tile .stat-val { font-size: 1.4rem; font-weight: 800; color: var(--color-accent2); }
+    .stat-tile .stat-lbl { font-size: 0.78rem; color: var(--color-muted); margin-top: 0.2rem; }
+    .formula-box {
+      background: var(--color-bg);
+      border: 1px dashed var(--color-border);
+      border-radius: var(--radius-sm);
+      padding: 1rem;
+      margin: 1rem auto;
+      max-width: 420px;
+      text-align: center;
+    }
+    .cta-row { display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; margin-top: 1rem; }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="topnav">
+    <a href="index.html" class="nav-brand"><span class="brand-icon">∫</span> Calculus 1 <span style="opacity:.5">TH</span></a>
+    <input type="checkbox" id="nav-toggle" />
+    <label for="nav-toggle" class="nav-hamburger"><span></span><span></span><span></span></label>
+    <div class="nav-links" style="display:flex; gap:.25rem; align-items:center; flex-wrap:wrap;">
+      <a href="index.html" class="nav-link active">หน้าแรก</a>
+      <a href="intro.html" class="nav-link">แนะนำ</a>
+      <a href="lessons.html" class="nav-link">ลิมิต</a>
+      <a href="continuity.html" class="nav-link">ต่อเนื่อง</a>
+      <a href="differentiation.html" class="nav-link">อนุพันธ์</a>
+      <a href="diff-app.html" class="nav-link">แอปอนุพันธ์</a>
+      <a href="integration.html" class="nav-link">ปริพันธ์</a>
+      <a href="integrate-app.html" class="nav-link">แอปปริพันธ์</a>
+      <a href="guess-game.html" class="nav-link">เกมทาย</a>
+      <a href="match-game.html" class="nav-link">เกมจับคู่</a>
+      <a href="index.html#progress" class="nav-xp">⭐ <span id="nav-xp-total">0</span> XP</a>
+    </div>
+  </nav>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero">
+      <h1 class="hero-title">ลิมิตของฟังก์ชัน 📈</h1>
+      <p class="hero-subtitle">
+        เรียนแคลคูลัส 1 แบบสนุก ท้าทาย ผ่านภาพ การเล่น และความเข้าใจที่แท้จริง —
+        เหมาะสำหรับนักเรียน ม.ปลาย และนิสิต/นักศึกษา ปี 1
+      </p>
+
+      <div class="formula-box">
+        <div style="color:var(--color-muted); font-size:.85rem; margin-bottom:.4rem;">
+          คำถามหลักของวิชานี้
+        </div>
+        <div style="font-size:1.4rem;">
+          $$\lim_{x \to a} f(x) = ?$$
+        </div>
+      </div>
+
+      <div class="cta-row">
+        <a href="intro.html" class="btn btn-primary btn-lg">🎮 เริ่มเล่น</a>
+        <a href="lessons.html" class="btn btn-lg">📚 อ่านบทเรียน</a>
+      </div>
+    </section>
+
+    <!-- XP Dashboard -->
+    <section id="progress" class="xp-dashboard">
+      <div class="xp-ring" id="xp-ring" style="--xp-pct:0;">
+        <div class="xp-ring-inner">
+          <div class="xp-total" id="xp-total-big">0</div>
+          <div class="xp-label">XP</div>
+        </div>
+      </div>
+      <div class="xp-info">
+        <div class="xp-level" id="xp-level">🌱 มือใหม่</div>
+        <div class="xp-next" id="xp-next">เริ่มเล่นเพื่อเก็บ XP!</div>
+        <div class="home-stats">
+          <div class="stat-tile">
+            <div class="stat-val" id="stat-lessons">0</div>
+            <div class="stat-lbl">บทที่เรียน</div>
+          </div>
+          <div class="stat-tile">
+            <div class="stat-val" id="stat-accuracy">0%</div>
+            <div class="stat-lbl">ความแม่นยำ</div>
+          </div>
+          <div class="stat-tile">
+            <div class="stat-val" id="stat-games">0</div>
+            <div class="stat-lbl">เกมที่เล่น</div>
+          </div>
+          <div class="stat-tile">
+            <div class="stat-val" id="stat-badges">0 / 7</div>
+            <div class="stat-lbl">แบดจ์ที่ได้</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Badge showcase -->
+    <section class="card">
+      <div class="card-title">🏅 แบดจ์ของคุณ</div>
+      <div class="badge-showcase" id="badge-showcase"></div>
+    </section>
+
+    <!-- Topic grid -->
+    <h2 style="font-size:1.25rem; font-weight:700; margin: 2rem 0 1rem;">
+      เลือกทำกิจกรรม
+    </h2>
+    <section class="topic-grid">
+      <a href="intro.html" class="topic-card card-intro">
+        <div class="tc-icon">🎯</div>
+        <div class="tc-title">แนะนำเชิงภาพ</div>
+        <div class="tc-desc">ลากจุดเข้าใกล้ a เห็นลิมิตด้วยตาของคุณเอง +20 XP</div>
+      </a>
+      <a href="lessons.html" class="topic-card card-lessons">
+        <div class="tc-icon">📚</div>
+        <div class="tc-title">บทเรียนลิมิต 4 หัวข้อ</div>
+        <div class="tc-desc">พื้นฐาน · ตรีโกณฯ · เอ็กซ์โพฯ · ลอการิทึม +30 XP/บท</div>
+      </a>
+      <a href="continuity.html" class="topic-card card-intro">
+        <div class="tc-icon">🔗</div>
+        <div class="tc-title">ฟังก์ชันต่อเนื่อง</div>
+        <div class="tc-desc">3 ประเภทของความไม่ต่อเนื่อง + IVT พร้อมภาพ +40 XP</div>
+      </a>
+      <a href="differentiation.html" class="topic-card card-lessons">
+        <div class="tc-icon">📐</div>
+        <div class="tc-title">อนุพันธ์</div>
+        <div class="tc-desc">แนวคิด secant→tangent · สูตรพื้นฐาน · อดิศัย +40 XP</div>
+      </a>
+      <a href="diff-app.html" class="topic-card card-guess">
+        <div class="tc-icon">⚡</div>
+        <div class="tc-title">แอปอนุพันธ์</div>
+        <div class="tc-desc">การเคลื่อนที่ · ลากจุดดูความชัน · หาจุดสูงสุด-ต่ำสุด +75 XP</div>
+      </a>
+      <a href="integration.html" class="topic-card card-match">
+        <div class="tc-icon">∫</div>
+        <div class="tc-title">ปริพันธ์</div>
+        <div class="tc-desc">รีมันน์ · แอนติเดริเวทีฟ · FTC แบบเล่นได้ +40 XP</div>
+      </a>
+      <a href="integrate-app.html" class="topic-card card-intro">
+        <div class="tc-icon">🎨</div>
+        <div class="tc-title">แอปปริพันธ์</div>
+        <div class="tc-desc">พื้นที่ระหว่างเส้นโค้ง · ปริมาตรหมุน · งานสปริง +75 XP</div>
+      </a>
+      <a href="guess-game.html" class="topic-card card-guess">
+        <div class="tc-icon">🎮</div>
+        <div class="tc-title">ทายค่าลิมิต</div>
+        <div class="tc-desc">10 ข้อ 75 วิ/ข้อ สตรีคเพิ่มคะแนนทวีคูณ +20 XP/ข้อ</div>
+      </a>
+      <a href="match-game.html" class="topic-card card-match">
+        <div class="tc-icon">🔗</div>
+        <div class="tc-title">จับคู่กราฟ–สูตร</div>
+        <div class="tc-desc">จับคู่ 6 คู่ ใน 3 นาที โบนัสจับได้ครบ +50 XP</div>
+      </a>
+    </section>
+
+    <!-- Reset/Debug section -->
+    <section class="card">
+      <div class="card-title">⚙️ จัดการข้อมูล</div>
+      <p class="text-muted text-small">
+        ข้อมูล XP และความคืบหน้าถูกบันทึกไว้ในเบราว์เซอร์ของคุณเท่านั้น (localStorage)
+      </p>
+      <div class="mt-2">
+        <button class="btn btn-sm" id="btn-reset">🗑️ ล้างความคืบหน้าทั้งหมด</button>
+      </div>
+    </section>
+
+    <footer style="text-align:center; color:var(--color-muted); font-size:.82rem; margin-top:3rem; padding-bottom:1rem;">
+      สร้างเพื่อการเรียนรู้แคลคูลัส 1 ภาษาไทย · ใช้ KaTeX + math.js
+    </footer>
+  </main>
+
+  <!-- Libraries -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+          onload="renderMathInElement(document.body, { delimiters: [{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false},{left:'$',right:'$',display:false}], throwOnError: false });"></script>
+
+  <!-- App -->
+  <script src="js/xp.js"></script>
+  <script>
+    'use strict';
+
+    function renderDashboard() {
+      const state = loadState();
+
+      // Find current badge (highest unlocked) and next threshold
+      const unlocked = BADGES.filter(b => state.badges.includes(b.id));
+      const current = unlocked[unlocked.length - 1] || BADGES[0];
+      const next = BADGES.find(b => !state.badges.includes(b.id) && b.threshold > state.xp);
+
+      // XP Ring
+      const ring = document.getElementById('xp-ring');
+      const pct = next
+        ? Math.min(100, Math.round((state.xp / next.threshold) * 100))
+        : 100;
+      ring.style.setProperty('--xp-pct', pct);
+      document.getElementById('xp-total-big').textContent = state.xp.toLocaleString();
+
+      // Level and next
+      document.getElementById('xp-level').textContent = `${current.emoji} ${current.name}`;
+      document.getElementById('xp-next').textContent = next
+        ? `อีก ${(next.threshold - state.xp).toLocaleString()} XP → ${next.emoji} ${next.name}`
+        : '🎉 ปลดล็อกครบทุกแบดจ์แล้ว!';
+
+      // Stats
+      document.getElementById('stat-lessons').textContent = state.lessonsCompleted.length;
+      document.getElementById('stat-accuracy').textContent = getAccuracy(state) + '%';
+      document.getElementById('stat-games').textContent =
+        (state.gamesPlayed.guess || 0) + (state.gamesPlayed.match || 0);
+      document.getElementById('stat-badges').textContent =
+        `${state.badges.length} / ${BADGES.length}`;
+
+      // Badge showcase
+      const showcase = document.getElementById('badge-showcase');
+      showcase.innerHTML = BADGES.map(b => {
+        const done = state.badges.includes(b.id);
+        return `
+          <div class="badge ${done ? 'unlocked' : 'locked'}">
+            <div class="badge-emoji">${b.emoji}</div>
+            <div class="badge-name">${b.name}</div>
+            <div class="badge-req">${b.req}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderDashboard();
+
+      document.getElementById('btn-reset').addEventListener('click', () => {
+        if (confirm('ต้องการล้างความคืบหน้าทั้งหมดใช่หรือไม่? การทำครั้งนี้ย้อนกลับไม่ได้')) {
+          localStorage.removeItem(XP_STORAGE_KEY);
+          showToast('ล้างข้อมูลเรียบร้อย', '🗑️');
+          setTimeout(() => location.reload(), 800);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
