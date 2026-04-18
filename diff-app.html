@@ -56,21 +56,32 @@
   <nav class="topnav">
     <a href="index.html" class="nav-brand"><span class="brand-icon">∫</span> Calculus 1 <span style="opacity:.5">TH</span></a>
     <input type="checkbox" id="nav-toggle" />
-    <label for="nav-toggle" class="nav-hamburger"><span></span><span></span><span></span></label>
-    <div class="nav-links" style="display:flex; gap:.25rem; align-items:center; flex-wrap:wrap;">
-      <a href="index.html" class="nav-link">หน้าแรก</a>
-      <a href="intro.html" class="nav-link">แนะนำ</a>
-      <a href="lessons.html" class="nav-link">ลิมิต</a>
-      <a href="continuity.html" class="nav-link">ต่อเนื่อง</a>
-      <a href="differentiation.html" class="nav-link">อนุพันธ์</a>
-      <a href="diff-app.html" class="nav-link active">แอปอนุพันธ์</a>
-      <a href="integration.html" class="nav-link">ปริพันธ์</a>
-      <a href="integrate-app.html" class="nav-link">แอปปริพันธ์</a>
-      <a href="guess-game.html" class="nav-link">เกมทาย</a>
-      <a href="match-game.html" class="nav-link">เกมจับคู่</a>
-      <a href="missions.html" class="nav-link">🎯 ภารกิจ</a>
-      <a href="index.html#progress" class="nav-xp">⭐ <span id="nav-xp-total">0</span> XP</a>
+    <label for="nav-toggle" class="nav-hamburger" aria-label="เมนู"><span></span><span></span><span></span></label>
+    <label for="nav-toggle" class="nav-overlay" aria-hidden="true"></label>
+    <div class="nav-links">
+      <div class="nav-group nav-group-top">
+      <a href="index.html" class="nav-link"><span class="nl-icon">🏠</span>หน้าแรก</a>
+      <a href="intro.html" class="nav-link"><span class="nl-icon">🎯</span>แนะนำ</a>
+      </div>
+      <div class="nav-group" data-title="📖 บทเรียน">
+      <a href="lessons.html" class="nav-link"><span class="nl-icon">📏</span>ลิมิต</a>
+      <a href="continuity.html" class="nav-link"><span class="nl-icon">🔗</span>ต่อเนื่อง</a>
+      <a href="differentiation.html" class="nav-link"><span class="nl-icon">📐</span>อนุพันธ์</a>
+      <a href="integration.html" class="nav-link"><span class="nl-icon">∫</span>ปริพันธ์</a>
+      </div>
+      <div class="nav-group" data-title="⚡ แอปประยุกต์">
+      <a href="diff-app.html" class="nav-link active"><span class="nl-icon">🚗</span>แอปอนุพันธ์</a>
+      <a href="integrate-app.html" class="nav-link"><span class="nl-icon">📊</span>แอปปริพันธ์</a>
+      </div>
+      <div class="nav-group" data-title="🎮 เกม">
+      <a href="guess-game.html" class="nav-link"><span class="nl-icon">🎲</span>เกมทาย</a>
+      <a href="match-game.html" class="nav-link"><span class="nl-icon">🧩</span>เกมจับคู่</a>
+      </div>
+      <div class="nav-group nav-group-cta">
+      <a href="missions.html" class="nav-link nav-cta"><span class="nl-icon">🎯</span>ภารกิจ</a>
+      </div>
     </div>
+    <a href="index.html#progress" class="nav-xp">⭐ <span id="nav-xp-total">0</span> XP</a>
   </nav>
 
   <main>
@@ -188,5 +199,6 @@
   <script src="js/graph.js"></script>
   <script src="js/functions.js"></script>
   <script src="js/diff-app.js"></script>
+  <script src="js/nav.js"></script>
 </body>
 </html>
