@@ -56,6 +56,7 @@
       <a href="diff-app.html" class="nav-link">แอปอนุพันธ์</a>
       <a href="integration.html" class="nav-link">ปริพันธ์</a>
       <a href="integrate-app.html" class="nav-link">แอปปริพันธ์</a>
+      <a href="missions.html" class="nav-link">🎯 ภารกิจ</a>
       <a href="guess-game.html" class="nav-link">เกมทาย</a>
       <a href="match-game.html" class="nav-link">เกมจับคู่</a>
       <a href="index.html#progress" class="nav-xp">⭐ <span id="nav-xp-total">0</span> XP</a>
@@ -164,6 +165,11 @@
         <div class="tc-title">แอปปริพันธ์</div>
         <div class="tc-desc">พื้นที่ระหว่างเส้นโค้ง · ปริมาตรหมุน · งานสปริง +75 XP</div>
       </a>
+      <a href="missions.html" class="topic-card card-lessons" style="border:2px solid var(--color-accent1);">
+        <div class="tc-icon">🎯</div>
+        <div class="tc-title">ภารกิจ (OBE + Bloom) <span style="background:rgba(250,204,21,.2); color:#facc15; font-size:.7rem; padding:.1rem .5rem; border-radius:99px; margin-left:.3rem;">NEW</span></div>
+        <div class="tc-desc">การบ้านแบบวัดผลได้ 6 ระดับ: จำ · เข้าใจ · ประยุกต์ · วิเคราะห์ · ประเมิน · สร้างสรรค์ +140 XP</div>
+      </a>
       <a href="guess-game.html" class="topic-card card-guess">
         <div class="tc-icon">🎮</div>
         <div class="tc-title">ทายค่าลิมิต</div>
@@ -251,8 +257,15 @@
 
       document.getElementById('btn-reset').addEventListener('click', () => {
         if (confirm('ต้องการล้างความคืบหน้าทั้งหมดใช่หรือไม่? การทำครั้งนี้ย้อนกลับไม่ได้')) {
+          // Clear XP + lesson state
           localStorage.removeItem(XP_STORAGE_KEY);
-          showToast('ล้างข้อมูลเรียบร้อย', '🗑️');
+          // Clear mission state (OBE + Bloom missions)
+          localStorage.removeItem('calc1_thai_missions');
+          // Sweep any other calc1_thai_* keys that may be added later
+          Object.keys(localStorage)
+            .filter(k => k.startsWith('calc1_thai_'))
+            .forEach(k => localStorage.removeItem(k));
+          showToast('ล้างข้อมูลเรียบร้อย (XP + ภารกิจ)', '🗑️');
           setTimeout(() => location.reload(), 800);
         }
       });
