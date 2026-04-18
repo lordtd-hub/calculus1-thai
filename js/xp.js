@@ -43,7 +43,19 @@ function sanitize(s) {
     lessonsCompleted: s?.lessonsCompleted ?? [],
     gamesPlayed:      s?.gamesPlayed      ?? { guess: 0, match: 0 },
     accuracy:         s?.accuracy         ?? { correct: 0, total: 0 },
+    learnerName:      (typeof s?.learnerName === 'string' ? s.learnerName : ''),
   };
+}
+
+// ── Learner identity ──
+function getLearnerName() {
+  return loadState().learnerName || '';
+}
+function setLearnerName(name) {
+  const state = loadState();
+  state.learnerName = (name || '').trim().slice(0, 40);
+  saveState(state);
+  return state.learnerName;
 }
 
 function saveState(state) {

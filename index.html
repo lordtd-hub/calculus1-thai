@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ลิมิตของฟังก์ชัน — แคลคูลัส 1</title>
+  <title>แคลคูลัส 1 — เรียนรู้แบบเล่นได้</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -12,10 +12,217 @@
 
   <link rel="stylesheet" href="css/main.css" />
   <style>
-    /* local tweaks for home */
+    /* ======================= Identity Card ======================= */
+    .identity-card {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 1.5rem;
+      align-items: center;
+      background: linear-gradient(135deg, var(--color-surface), var(--color-surface2));
+      border: 1px solid rgba(139, 92, 246, 0.35);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      margin: 1.25rem auto 1rem;
+      box-shadow: 0 20px 60px -20px rgba(139, 92, 246, 0.5);
+      position: relative;
+      overflow: hidden;
+    }
+    .identity-card::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(139,92,246,0.18), transparent 40%),
+        radial-gradient(circle at 85% 80%, rgba(251,113,133,0.12), transparent 45%);
+      pointer-events: none;
+    }
+    .identity-avatar {
+      position: relative;
+      width: 140px; height: 140px;
+      border-radius: 50%;
+      padding: 8px;
+      background: conic-gradient(
+        var(--color-accent3) calc(var(--xp-pct, 0) * 1%),
+        rgba(255,255,255,0.08) 0
+      );
+      display: grid; place-items: center;
+      transition: --xp-pct 0.8s ease;
+      flex-shrink: 0;
+    }
+    .identity-avatar-inner {
+      width: 100%; height: 100%;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #1a1030, #2a1e4d);
+      display: grid; place-items: center;
+      border: 2px solid rgba(255,255,255,0.08);
+      position: relative;
+    }
+    .identity-avatar-emoji {
+      font-size: 3.8rem;
+      line-height: 1;
+      filter: drop-shadow(0 4px 12px rgba(139,92,246,0.5));
+      animation: avatar-float 4s ease-in-out infinite;
+    }
+    @keyframes avatar-float {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(-3px); }
+    }
+    .identity-xp-pill {
+      position: absolute;
+      bottom: -6px; left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, var(--color-accent3), #f97316);
+      color: #1a1030;
+      font-weight: 800;
+      font-size: .75rem;
+      padding: .2rem .7rem;
+      border-radius: 999px;
+      white-space: nowrap;
+      box-shadow: 0 4px 12px rgba(250,204,21,0.4);
+    }
+    .identity-body {
+      position: relative; z-index: 1;
+      min-width: 0;
+    }
+    .identity-greeting {
+      color: var(--color-muted);
+      font-size: .9rem;
+      margin-bottom: .15rem;
+      display: flex; align-items: center; gap: .4rem;
+    }
+    .identity-name-row {
+      display: flex;
+      align-items: baseline;
+      gap: .5rem;
+      flex-wrap: wrap;
+      margin-bottom: .4rem;
+    }
+    .identity-name {
+      font-size: 1.8rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, #fff 0%, var(--color-primary-light) 55%, var(--color-accent1) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.15;
+      cursor: pointer;
+      border-bottom: 2px dashed transparent;
+      transition: border-color .2s;
+      min-width: 200px;
+    }
+    .identity-name:hover { border-bottom-color: rgba(167, 139, 250, .5); }
+    .identity-name.placeholder {
+      -webkit-text-fill-color: var(--color-muted);
+      color: var(--color-muted);
+      font-weight: 600;
+      font-size: 1.3rem;
+      font-style: italic;
+    }
+    .identity-name-edit-btn {
+      background: rgba(139,92,246,.18);
+      border: 1px solid rgba(139,92,246,.45);
+      color: var(--color-primary-light);
+      font-size: .7rem;
+      padding: .15rem .5rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all .15s;
+    }
+    .identity-name-edit-btn:hover {
+      background: rgba(139,92,246,.35);
+      color: #fff;
+    }
+    .identity-name-input {
+      font-size: 1.5rem;
+      font-weight: 800;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--color-primary);
+      color: #fff;
+      padding: .35rem .6rem;
+      border-radius: 8px;
+      font-family: inherit;
+      outline: none;
+      width: 100%;
+      max-width: 320px;
+      box-shadow: 0 0 0 3px rgba(139,92,246,.25);
+    }
+    .identity-badge-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      background: linear-gradient(135deg, rgba(139,92,246,0.2), rgba(251,113,133,0.15));
+      border: 1px solid rgba(139,92,246,0.4);
+      padding: .35rem .8rem;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: .95rem;
+      color: #fff;
+      margin-right: .5rem;
+    }
+    .identity-badge-emoji {
+      font-size: 1.15rem;
+      filter: drop-shadow(0 2px 6px rgba(250,204,21,0.4));
+    }
+    .identity-progress {
+      color: var(--color-muted);
+      font-size: .85rem;
+      margin-top: .25rem;
+    }
+    .identity-progress b { color: var(--color-accent3); font-weight: 700; }
+    .identity-attrib {
+      display: inline-block;
+      margin-top: .8rem;
+      color: var(--color-muted);
+      font-size: .78rem;
+      font-style: italic;
+      padding: .2rem .6rem;
+      border-left: 2px solid var(--color-primary);
+      background: rgba(139,92,246,.06);
+      border-radius: 4px;
+    }
+
+    /* ======================= How to use ======================= */
+    .howto-card {
+      background: linear-gradient(135deg, rgba(34,211,238,0.08), rgba(139,92,246,0.05));
+      border: 1px solid rgba(34,211,238,0.25);
+    }
+    .howto-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: .85rem;
+      margin-top: 1rem;
+    }
+    .howto-step {
+      background: rgba(0,0,0,0.18);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-sm);
+      padding: .9rem 1rem;
+      display: flex;
+      gap: .75rem;
+      align-items: flex-start;
+      transition: all .2s;
+    }
+    .howto-step:hover {
+      border-color: var(--color-accent2);
+      transform: translateY(-2px);
+    }
+    .howto-num {
+      flex-shrink: 0;
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--color-primary), var(--color-accent1));
+      color: #fff;
+      font-weight: 900;
+      font-size: 1.05rem;
+      display: grid; place-items: center;
+      box-shadow: 0 4px 10px rgba(139,92,246,0.35);
+    }
+    .howto-title { font-weight: 700; color: #fff; margin-bottom: .15rem; font-size: .95rem; }
+    .howto-desc { color: var(--color-muted); font-size: .82rem; line-height: 1.5; }
+
+    /* ======================= Home stats tiles ======================= */
     .home-stats {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
       gap: 0.75rem;
       margin-top: 1rem;
     }
@@ -25,19 +232,40 @@
       border-radius: var(--radius-sm);
       padding: 0.9rem 1rem;
       text-align: center;
+      transition: transform .15s;
     }
+    .stat-tile:hover { transform: translateY(-2px); border-color: var(--color-primary); }
     .stat-tile .stat-val { font-size: 1.4rem; font-weight: 800; color: var(--color-accent2); }
     .stat-tile .stat-lbl { font-size: 0.78rem; color: var(--color-muted); margin-top: 0.2rem; }
-    .formula-box {
-      background: var(--color-bg);
-      border: 1px dashed var(--color-border);
-      border-radius: var(--radius-sm);
-      padding: 1rem;
-      margin: 1rem auto;
-      max-width: 420px;
-      text-align: center;
+
+    /* ======================= Featured mission CTA ======================= */
+    .mission-spotlight {
+      background: linear-gradient(135deg, rgba(251,113,133,0.15), rgba(139,92,246,0.12));
+      border: 2px dashed rgba(251,113,133,0.6);
+      position: relative;
     }
-    .cta-row { display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; margin-top: 1rem; }
+    .mission-spotlight .new-pill {
+      position: absolute; top: -10px; right: 14px;
+      background: linear-gradient(135deg, var(--color-accent3), #f97316);
+      color: #1a1030;
+      font-size: .7rem; font-weight: 900;
+      padding: .2rem .65rem;
+      border-radius: 999px;
+      box-shadow: 0 4px 10px rgba(250,204,21,0.4);
+    }
+
+    /* ======================= Responsive ======================= */
+    @media (max-width: 700px) {
+      .identity-card {
+        grid-template-columns: 1fr;
+        text-align: center;
+        padding: 1.25rem;
+      }
+      .identity-avatar { width: 120px; height: 120px; margin: 0 auto; }
+      .identity-avatar-emoji { font-size: 3.2rem; }
+      .identity-name { font-size: 1.5rem; min-width: 0; }
+      .identity-name-row { justify-content: center; }
+    }
   </style>
 </head>
 <body>
@@ -56,38 +284,100 @@
       <a href="diff-app.html" class="nav-link">แอปอนุพันธ์</a>
       <a href="integration.html" class="nav-link">ปริพันธ์</a>
       <a href="integrate-app.html" class="nav-link">แอปปริพันธ์</a>
-      <a href="missions.html" class="nav-link">🎯 ภารกิจ</a>
       <a href="guess-game.html" class="nav-link">เกมทาย</a>
       <a href="match-game.html" class="nav-link">เกมจับคู่</a>
+      <a href="missions.html" class="nav-link">🎯 ภารกิจ</a>
       <a href="index.html#progress" class="nav-xp">⭐ <span id="nav-xp-total">0</span> XP</a>
     </div>
   </nav>
 
   <main>
-    <!-- Hero -->
-    <section class="hero">
-      <h1 class="hero-title">ลิมิตของฟังก์ชัน 📈</h1>
-      <p class="hero-subtitle">
-        เรียนแคลคูลัส 1 แบบสนุก ท้าทาย ผ่านภาพ การเล่น และความเข้าใจที่แท้จริง —
-        เหมาะสำหรับนักเรียน ม.ปลาย และนิสิต/นักศึกษา ปี 1
-      </p>
 
-      <div class="formula-box">
-        <div style="color:var(--color-muted); font-size:.85rem; margin-bottom:.4rem;">
-          คำถามหลักของวิชานี้
-        </div>
-        <div style="font-size:1.4rem;">
-          $$\lim_{x \to a} f(x) = ?$$
+    <!-- ================= Identity Card ================= -->
+    <section class="identity-card" id="identity-card">
+      <div class="identity-avatar" id="identity-avatar" style="--xp-pct:0;">
+        <div class="identity-avatar-inner">
+          <div class="identity-avatar-emoji" id="identity-avatar-emoji">🌱</div>
+          <div class="identity-xp-pill"><span id="identity-xp-num">0</span> XP</div>
         </div>
       </div>
 
-      <div class="cta-row">
-        <a href="intro.html" class="btn btn-primary btn-lg">🎮 เริ่มเล่น</a>
-        <a href="lessons.html" class="btn btn-lg">📚 อ่านบทเรียน</a>
+      <div class="identity-body">
+        <div class="identity-greeting">👋 ยินดีต้อนรับสู่ Calculus 1</div>
+
+        <div class="identity-name-row" id="identity-name-row">
+          <span class="identity-name placeholder" id="identity-name" tabindex="0"
+                title="คลิกเพื่อตั้งชื่อ">ยังไม่ได้ตั้งชื่อ — คลิกเพื่อตั้งชื่อ</span>
+          <button class="identity-name-edit-btn" id="identity-name-edit">✏ แก้ไข</button>
+        </div>
+
+        <div>
+          <span class="identity-badge-chip">
+            <span class="identity-badge-emoji" id="identity-badge-emoji">🌱</span>
+            <span id="identity-badge-name">มือใหม่</span>
+          </span>
+        </div>
+
+        <div class="identity-progress" id="identity-progress">เริ่มเรียนเพื่อเก็บ XP!</div>
+
+        <div class="identity-attrib">✦ แนวคิดโดย อาจารย์สิทธิโชค ทรงสอาด ✦</div>
       </div>
     </section>
 
-    <!-- XP Dashboard -->
+    <!-- ================= Hero formula ================= -->
+    <section class="hero" style="padding-top:1rem;">
+      <h1 class="hero-title">แคลคูลัส 1 ภาษาไทย 📈</h1>
+      <p class="hero-subtitle">
+        เรียนผ่านภาพ · เล่น · ลงมือทำ · คิดเป็นระบบ
+        <br /><span style="opacity:.7;">เหมาะสำหรับนักเรียน ม.ปลาย และนิสิต/นักศึกษา ปี 1</span>
+      </p>
+
+      <div class="cta-row" style="margin-top:1.5rem;">
+        <a href="intro.html" class="btn btn-primary btn-lg">🎮 เริ่มเรียน</a>
+        <a href="lessons.html" class="btn btn-lg">📚 อ่านบทเรียน</a>
+        <a href="missions.html" class="btn btn-lg" style="border-color:var(--color-accent1);color:var(--color-accent1);">🎯 ลองภารกิจ</a>
+      </div>
+    </section>
+
+    <!-- ================= How To Use ================= -->
+    <section class="card howto-card">
+      <div class="card-title">🧭 วิธีใช้งานเบื้องต้น</div>
+      <p class="text-muted text-small" style="margin-bottom:.2rem;">
+        เว็บนี้เรียนคนเดียวได้ — ความคืบหน้าเก็บไว้ในเบราว์เซอร์ของคุณเอง ไม่ต้องสมัครสมาชิก
+      </p>
+      <div class="howto-steps">
+        <div class="howto-step">
+          <div class="howto-num">1</div>
+          <div>
+            <div class="howto-title">ตั้งชื่อของคุณ</div>
+            <div class="howto-desc">คลิกชื่อด้านบนเพื่อใส่ชื่อตัวเอง จะได้สนุกกับการเก็บ XP 😊</div>
+          </div>
+        </div>
+        <div class="howto-step">
+          <div class="howto-num">2</div>
+          <div>
+            <div class="howto-title">เรียนตามลำดับ</div>
+            <div class="howto-desc">ลิมิต → ต่อเนื่อง → อนุพันธ์ → ปริพันธ์ · แต่ละหน้ามีภาพเล่นได้</div>
+          </div>
+        </div>
+        <div class="howto-step">
+          <div class="howto-num">3</div>
+          <div>
+            <div class="howto-title">เล่นเกม เก็บ XP</div>
+            <div class="howto-desc">เกมทายลิมิต + จับคู่กราฟ–สูตร ช่วยฝึกความเร็วและความคุ้นเคย</div>
+          </div>
+        </div>
+        <div class="howto-step">
+          <div class="howto-num">4</div>
+          <div>
+            <div class="howto-title">พิชิตภารกิจ (ท้าทาย)</div>
+            <div class="howto-desc">ทำภารกิจแบบ Step-Based Reasoning — ไม่มีเฉลยจนกว่าคุณจะผ่านเกณฑ์ 70%</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= XP Dashboard (progress stats) ================= -->
     <section id="progress" class="xp-dashboard">
       <div class="xp-ring" id="xp-ring" style="--xp-pct:0;">
         <div class="xp-ring-inner">
@@ -119,15 +409,15 @@
       </div>
     </section>
 
-    <!-- Badge showcase -->
+    <!-- ================= Badge showcase ================= -->
     <section class="card">
       <div class="card-title">🏅 แบดจ์ของคุณ</div>
       <div class="badge-showcase" id="badge-showcase"></div>
     </section>
 
-    <!-- Topic grid -->
+    <!-- ================= Topic grid (missions LAST) ================= -->
     <h2 style="font-size:1.25rem; font-weight:700; margin: 2rem 0 1rem;">
-      เลือกทำกิจกรรม
+      📖 เลือกทำกิจกรรม
     </h2>
     <section class="topic-grid">
       <a href="intro.html" class="topic-card card-intro">
@@ -165,11 +455,6 @@
         <div class="tc-title">แอปปริพันธ์</div>
         <div class="tc-desc">พื้นที่ระหว่างเส้นโค้ง · ปริมาตรหมุน · งานสปริง +75 XP</div>
       </a>
-      <a href="missions.html" class="topic-card card-lessons" style="border:2px solid var(--color-accent1);">
-        <div class="tc-icon">🎯</div>
-        <div class="tc-title">ภารกิจ (OBE + Bloom) <span style="background:rgba(250,204,21,.2); color:#facc15; font-size:.7rem; padding:.1rem .5rem; border-radius:99px; margin-left:.3rem;">NEW</span></div>
-        <div class="tc-desc">การบ้านแบบวัดผลได้ 6 ระดับ: จำ · เข้าใจ · ประยุกต์ · วิเคราะห์ · ประเมิน · สร้างสรรค์ +140 XP</div>
-      </a>
       <a href="guess-game.html" class="topic-card card-guess">
         <div class="tc-icon">🎮</div>
         <div class="tc-title">ทายค่าลิมิต</div>
@@ -180,20 +465,29 @@
         <div class="tc-title">จับคู่กราฟ–สูตร</div>
         <div class="tc-desc">จับคู่ 6 คู่ ใน 3 นาที โบนัสจับได้ครบ +50 XP</div>
       </a>
+      <a href="missions.html" class="topic-card card-lessons mission-spotlight">
+        <span class="new-pill">NEW</span>
+        <div class="tc-icon">🎯</div>
+        <div class="tc-title">ภารกิจ (OBE + Bloom)</div>
+        <div class="tc-desc">การบ้านวัดผลได้ 6 ระดับ + SBRA ขั้นวางแผน 🎯 · ไม่เฉลยจนกว่าจะผ่าน +140 XP</div>
+      </a>
     </section>
 
     <!-- Reset/Debug section -->
     <section class="card">
       <div class="card-title">⚙️ จัดการข้อมูล</div>
       <p class="text-muted text-small">
-        ข้อมูล XP และความคืบหน้าถูกบันทึกไว้ในเบราว์เซอร์ของคุณเท่านั้น (localStorage)
+        ข้อมูลทั้งหมด (ชื่อ · XP · ความคืบหน้า) ถูกบันทึกไว้ในเบราว์เซอร์ของคุณเท่านั้น (localStorage)
       </p>
       <div class="mt-2">
-        <button class="btn btn-sm" id="btn-reset">🗑️ ล้างความคืบหน้าทั้งหมด</button>
+        <button class="btn btn-sm" id="btn-reset">🗑️ ล้างข้อมูลทั้งหมด</button>
       </div>
     </section>
 
-    <footer style="text-align:center; color:var(--color-muted); font-size:.82rem; margin-top:3rem; padding-bottom:1rem;">
+    <footer style="text-align:center; color:var(--color-muted); font-size:.82rem; margin-top:3rem; padding-bottom:1rem; line-height:1.7;">
+      <div style="font-size:.95rem; color:var(--color-primary-light); margin-bottom:.25rem;">
+        ✦ แนวคิดโดย <b>อาจารย์สิทธิโชค ทรงสอาด</b> ✦
+      </div>
       สร้างเพื่อการเรียนรู้แคลคูลัส 1 ภาษาไทย · ใช้ KaTeX + math.js
     </footer>
   </main>
@@ -208,15 +502,51 @@
   <script>
     'use strict';
 
+    function currentBadge(state) {
+      const unlocked = BADGES.filter(b => state.badges.includes(b.id));
+      return unlocked[unlocked.length - 1] || BADGES[0];
+    }
+
+    function renderIdentity() {
+      const state = loadState();
+      const current = currentBadge(state);
+      const next = BADGES.find(b => !state.badges.includes(b.id) && b.threshold > state.xp);
+      const pct = next
+        ? Math.min(100, Math.round((state.xp / next.threshold) * 100))
+        : 100;
+
+      // Avatar: ring + emoji + xp pill
+      document.getElementById('identity-avatar').style.setProperty('--xp-pct', pct);
+      document.getElementById('identity-avatar-emoji').textContent = current.emoji;
+      document.getElementById('identity-xp-num').textContent = state.xp.toLocaleString();
+
+      // Name
+      const nameEl = document.getElementById('identity-name');
+      const name = (state.learnerName || '').trim();
+      if (name) {
+        nameEl.textContent = name;
+        nameEl.classList.remove('placeholder');
+      } else {
+        nameEl.textContent = 'ยังไม่ได้ตั้งชื่อ — คลิกเพื่อตั้งชื่อ';
+        nameEl.classList.add('placeholder');
+      }
+
+      // Badge chip
+      document.getElementById('identity-badge-emoji').textContent = current.emoji;
+      document.getElementById('identity-badge-name').textContent = current.name;
+
+      // Progress line
+      const prog = document.getElementById('identity-progress');
+      prog.innerHTML = next
+        ? `อีก <b>${(next.threshold - state.xp).toLocaleString()}</b> XP → ${next.emoji} ${next.name}`
+        : '🎉 ปลดล็อกครบทุกแบดจ์แล้ว!';
+    }
+
     function renderDashboard() {
       const state = loadState();
-
-      // Find current badge (highest unlocked) and next threshold
-      const unlocked = BADGES.filter(b => state.badges.includes(b.id));
-      const current = unlocked[unlocked.length - 1] || BADGES[0];
+      const current = currentBadge(state);
       const next = BADGES.find(b => !state.badges.includes(b.id) && b.threshold > state.xp);
 
-      // XP Ring
       const ring = document.getElementById('xp-ring');
       const pct = next
         ? Math.min(100, Math.round((state.xp / next.threshold) * 100))
@@ -224,13 +554,11 @@
       ring.style.setProperty('--xp-pct', pct);
       document.getElementById('xp-total-big').textContent = state.xp.toLocaleString();
 
-      // Level and next
       document.getElementById('xp-level').textContent = `${current.emoji} ${current.name}`;
       document.getElementById('xp-next').textContent = next
         ? `อีก ${(next.threshold - state.xp).toLocaleString()} XP → ${next.emoji} ${next.name}`
         : '🎉 ปลดล็อกครบทุกแบดจ์แล้ว!';
 
-      // Stats
       document.getElementById('stat-lessons').textContent = state.lessonsCompleted.length;
       document.getElementById('stat-accuracy').textContent = getAccuracy(state) + '%';
       document.getElementById('stat-games').textContent =
@@ -238,7 +566,6 @@
       document.getElementById('stat-badges').textContent =
         `${state.badges.length} / ${BADGES.length}`;
 
-      // Badge showcase
       const showcase = document.getElementById('badge-showcase');
       showcase.innerHTML = BADGES.map(b => {
         const done = state.badges.includes(b.id);
@@ -252,20 +579,59 @@
       }).join('');
     }
 
+    // ── Inline name editing ──
+    function startEditName() {
+      const row = document.getElementById('identity-name-row');
+      const current = getLearnerName();
+      row.innerHTML = `
+        <input type="text" class="identity-name-input" id="identity-name-input"
+               maxlength="40" placeholder="พิมพ์ชื่อของคุณ..." value="${current.replace(/"/g,'&quot;')}" />
+        <button class="btn btn-sm btn-primary" id="identity-save">บันทึก</button>
+        <button class="btn btn-sm" id="identity-cancel">ยกเลิก</button>
+      `;
+      const input = document.getElementById('identity-name-input');
+      input.focus();
+      input.select();
+
+      const save = () => {
+        const v = setLearnerName(input.value);
+        renderIdentity();
+        wireNameEditor();
+        if (v) showToast(`ยินดีต้อนรับ ${v}!`, '👋');
+      };
+      const cancel = () => { renderIdentity(); wireNameEditor(); };
+
+      document.getElementById('identity-save').addEventListener('click', save);
+      document.getElementById('identity-cancel').addEventListener('click', cancel);
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') save();
+        if (e.key === 'Escape') cancel();
+      });
+    }
+
+    function wireNameEditor() {
+      const nameEl = document.getElementById('identity-name');
+      const editBtn = document.getElementById('identity-name-edit');
+      if (nameEl) nameEl.addEventListener('click', startEditName);
+      if (editBtn) editBtn.addEventListener('click', startEditName);
+      if (nameEl) nameEl.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); startEditName(); }
+      });
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
+      renderIdentity();
       renderDashboard();
+      wireNameEditor();
 
       document.getElementById('btn-reset').addEventListener('click', () => {
-        if (confirm('ต้องการล้างความคืบหน้าทั้งหมดใช่หรือไม่? การทำครั้งนี้ย้อนกลับไม่ได้')) {
-          // Clear XP + lesson state
+        if (confirm('ต้องการล้างข้อมูลทั้งหมด (รวมชื่อ · XP · ความคืบหน้า) ใช่หรือไม่? การทำครั้งนี้ย้อนกลับไม่ได้')) {
           localStorage.removeItem(XP_STORAGE_KEY);
-          // Clear mission state (OBE + Bloom missions)
           localStorage.removeItem('calc1_thai_missions');
-          // Sweep any other calc1_thai_* keys that may be added later
           Object.keys(localStorage)
             .filter(k => k.startsWith('calc1_thai_'))
             .forEach(k => localStorage.removeItem(k));
-          showToast('ล้างข้อมูลเรียบร้อย (XP + ภารกิจ)', '🗑️');
+          showToast('ล้างข้อมูลเรียบร้อย', '🗑️');
           setTimeout(() => location.reload(), 800);
         }
       });
