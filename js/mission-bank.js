@@ -460,6 +460,20 @@ const POOL_M6_CREATE = [
      (1) ผลลัพธ์/การกระทำ  (2) เหตุผล/กฎที่ใช้
    ============================================================ */
 
+/* ---------- REAL COURSE CLOs (canonical grouped mapping) ----------
+   Use these six CLO codes as the top-level learning-outcome taxonomy for
+   every SBRA item (and, over time, every mission). The older runtime micro-CLO
+   tags stay in place for existing missions but should be treated as sub-CLO
+   skill tags — see CAULD_PROJECT_REVIEW.md. */
+const REAL_CLOS = {
+  CLO1: 'อธิบายและคำนวณลิมิต',
+  CLO2: 'ทดสอบและอธิบายความต่อเนื่อง',
+  CLO3: 'คำนวณและตีความอนุพันธ์',
+  CLO4: 'ใช้อนุพันธ์วิเคราะห์ฟังก์ชันและการประยุกต์',
+  CLO5: 'คำนวณปริพันธ์จำกัดและไม่จำกัด',
+  CLO6: 'ใช้ปริพันธ์ในการประยุกต์',
+};
+
 /* ---------- SBRA: STRATEGY / PLANNING STEP (prepend to every problem) ----------
    ก่อนลงมือทำจริง ให้นักศึกษาเลือก: (1) เทคนิค/แนวคิดหลักที่จะใช้  (2) เหตุผลที่เลือกเทคนิคนั้น
    key = problem id in pools; controller จะรวม strategy เป็นสเต็ปแรกอัตโนมัติ */
@@ -776,7 +790,7 @@ const SBRA_STRATEGIES = {
 
 /* ---------- SBRA: LIMITS ---------- */
 const POOL_SBRA_LIMITS = [
-  { id:'sbra-lim-factor',
+  { id:'sbra-lim-factor', clo:'CLO1',
     title:'แยกตัวประกอบ — \\(\\lim_{x\\to 2}\\frac{x^2-4}{x-2}\\)',
     problem:'\\lim_{x\\to 2}\\dfrac{x^2-4}{x-2}',
     steps:[
@@ -826,7 +840,7 @@ const POOL_SBRA_LIMITS = [
     ],
     finalAnswer:{ tex:'4', sayTH:'ลิมิตเท่ากับ 4' } },
 
-  { id:'sbra-lim-conjugate',
+  { id:'sbra-lim-conjugate', clo:'CLO1',
     title:'คอนจูเกต — \\(\\lim_{x\\to 1}\\frac{\\sqrt{x+3}-2}{x-1}\\)',
     problem:'\\lim_{x\\to 1}\\dfrac{\\sqrt{x+3}-2}{x-1}',
     steps:[
@@ -893,7 +907,7 @@ const POOL_SBRA_LIMITS = [
     ],
     finalAnswer:{ tex:'\\dfrac{1}{4}', sayTH:'ลิมิตเท่ากับ 1/4' } },
 
-  { id:'sbra-lim-sinu',
+  { id:'sbra-lim-sinu', clo:'CLO1',
     title:'ลิมิตพื้นฐาน sin — \\(\\lim_{x\\to 0}\\dfrac{\\sin(3x)}{x}\\)',
     problem:'\\lim_{x\\to 0}\\dfrac{\\sin(3x)}{x}',
     steps:[
@@ -941,7 +955,7 @@ const POOL_SBRA_LIMITS = [
     ],
     finalAnswer:{ tex:'3', sayTH:'ลิมิตเท่ากับ 3' } },
 
-  { id:'sbra-lim-infty',
+  { id:'sbra-lim-infty', clo:'CLO1',
     title:'ลิมิตอนันต์ — \\(\\lim_{x\\to\\infty}\\dfrac{3x^2+5}{2x^2-x+1}\\)',
     problem:'\\lim_{x\\to\\infty}\\dfrac{3x^2+5}{2x^2-x+1}',
     steps:[
@@ -989,7 +1003,7 @@ const POOL_SBRA_LIMITS = [
     ],
     finalAnswer:{ tex:'\\dfrac{3}{2}', sayTH:'ลิมิตเท่ากับ 3/2' } },
 
-  { id:'sbra-lim-onesided',
+  { id:'sbra-lim-onesided', clo:'CLO1',
     title:'ลิมิตสองด้าน — \\(\\lim_{x\\to 0}\\dfrac{|x|}{x}\\)',
     problem:'\\lim_{x\\to 0}\\dfrac{|x|}{x}',
     steps:[
@@ -1038,7 +1052,7 @@ const POOL_SBRA_LIMITS = [
 
 /* ---------- SBRA: CONTINUITY ---------- */
 const POOL_SBRA_CONT = [
-  { id:'sbra-cont-removable',
+  { id:'sbra-cont-removable', clo:'CLO2',
     title:'ตรวจต่อเนื่อง — removable',
     problem:'f(x)=\\begin{cases}\\dfrac{x^2-4}{x-2}&x\\ne 2\\\\5&x=2\\end{cases}\\quad\\text{ต่อเนื่องที่ }x=2\\text{ หรือไม่?}',
     steps:[
@@ -1086,7 +1100,7 @@ const POOL_SBRA_CONT = [
     ],
     finalAnswer:{ tex:'\\text{removable}', sayTH:'ไม่ต่อเนื่องแบบ removable' } },
 
-  { id:'sbra-cont-findk',
+  { id:'sbra-cont-findk', clo:'CLO2',
     title:'หา k ให้ต่อเนื่อง',
     problem:'f(x)=\\begin{cases}x+k&x<1\\\\3x&x\\ge 1\\end{cases}\\quad\\text{หา }k',
     steps:[
@@ -1132,7 +1146,7 @@ const POOL_SBRA_CONT = [
     ],
     finalAnswer:{ tex:'k=2', sayTH:'ต้องใช้ k=2' } },
 
-  { id:'sbra-cont-infty',
+  { id:'sbra-cont-infty', clo:'CLO2',
     title:'จำแนกความไม่ต่อเนื่อง — \\(\\frac{1}{(x-3)^2}\\)',
     problem:'f(x)=\\dfrac{1}{(x-3)^2}\\text{ ที่ }x=3',
     steps:[
@@ -1167,7 +1181,7 @@ const POOL_SBRA_CONT = [
     ],
     finalAnswer:{ tex:'\\text{infinite}', sayTH:'ไม่ต่อเนื่องแบบอนันต์' } },
 
-  { id:'sbra-cont-ivt',
+  { id:'sbra-cont-ivt', clo:'CLO2',
     title:'IVT — \\(x^3+x-1=0\\) บน [0,1]',
     problem:'f(x)=x^3+x-1,\\ f(0)=-1,\\ f(1)=1 \\Rightarrow\\text{มีรากใน (0,1) หรือไม่?}',
     steps:[
@@ -1222,7 +1236,7 @@ const POOL_SBRA_CONT = [
 
 /* ---------- SBRA: DIFFERENTIATION ---------- */
 const POOL_SBRA_DIFF = [
-  { id:'sbra-d-product',
+  { id:'sbra-d-product', clo:'CLO3',
     title:'Product rule — \\(\\dfrac{d}{dx}[x^2\\sin x]\\)',
     problem:'\\dfrac{d}{dx}\\big[x^2\\sin x\\big]',
     steps:[
@@ -1287,7 +1301,7 @@ const POOL_SBRA_DIFF = [
     ],
     finalAnswer:{ tex:'2x\\sin x + x^2\\cos x' } },
 
-  { id:'sbra-d-chain',
+  { id:'sbra-d-chain', clo:'CLO3',
     title:'Chain rule — \\(\\dfrac{d}{dx}[\\sin(3x^2)]\\)',
     problem:'\\dfrac{d}{dx}\\sin(3x^2)',
     steps:[
@@ -1350,7 +1364,7 @@ const POOL_SBRA_DIFF = [
     ],
     finalAnswer:{ tex:'6x\\cos(3x^2)' } },
 
-  { id:'sbra-d-quotient',
+  { id:'sbra-d-quotient', clo:'CLO3',
     title:'Quotient rule — \\(\\dfrac{d}{dx}\\big[\\dfrac{2x+1}{x^2+1}\\big]\\)',
     problem:'\\dfrac{d}{dx}\\dfrac{2x+1}{x^2+1}',
     steps:[
@@ -1428,7 +1442,7 @@ const POOL_SBRA_DIFF = [
     ],
     finalAnswer:{ tex:'\\dfrac{-2x^2-2x+2}{(x^2+1)^2}' } },
 
-  { id:'sbra-d-expchain',
+  { id:'sbra-d-expchain', clo:'CLO3',
     title:'Chain + exp — \\(\\dfrac{d}{dx}e^{x^2}\\)',
     problem:'\\dfrac{d}{dx}e^{x^2}',
     steps:[
@@ -1488,7 +1502,7 @@ const POOL_SBRA_DIFF = [
     ],
     finalAnswer:{ tex:'2xe^{x^2}' } },
 
-  { id:'sbra-d-critical',
+  { id:'sbra-d-critical', clo:'CLO4',
     title:'หาจุดวิกฤต — \\(f(x)=x^3-3x\\)',
     problem:'\\text{หา critical points และจำแนก: }f(x)=x^3-3x',
     steps:[
@@ -1549,7 +1563,7 @@ const POOL_SBRA_DIFF = [
     ],
     finalAnswer:{ tex:'x=-1\\ \\text{(max)},\\ x=1\\ \\text{(min)}' } },
 
-  { id:'sbra-d-implicit',
+  { id:'sbra-d-implicit', clo:'CLO3',
     title:'Implicit — \\(x^2+y^2=25\\), หา \\(dy/dx\\)',
     problem:'x^2+y^2=25,\\ \\dfrac{dy}{dx}=?',
     steps:[
@@ -1589,7 +1603,7 @@ const POOL_SBRA_DIFF = [
 
 /* ---------- SBRA: INTEGRATION ---------- */
 const POOL_SBRA_INT = [
-  { id:'sbra-i-usub',
+  { id:'sbra-i-usub', clo:'CLO5',
     title:'u-substitution — \\(\\int 2x\\cos(x^2)\\,dx\\)',
     problem:'\\int 2x\\cos(x^2)\\,dx',
     steps:[
@@ -1656,7 +1670,7 @@ const POOL_SBRA_INT = [
     ],
     finalAnswer:{ tex:'\\sin(x^2)+C' } },
 
-  { id:'sbra-i-ibp',
+  { id:'sbra-i-ibp', clo:'CLO5',
     title:'Integration by parts — \\(\\int xe^x\\,dx\\)',
     problem:'\\int xe^x\\,dx',
     steps:[
@@ -1735,7 +1749,7 @@ const POOL_SBRA_INT = [
     ],
     finalAnswer:{ tex:'xe^x-e^x+C' } },
 
-  { id:'sbra-i-definite',
+  { id:'sbra-i-definite', clo:'CLO5',
     title:'FTC — \\(\\int_0^2 3x^2\\,dx\\)',
     problem:'\\int_0^2 3x^2\\,dx',
     steps:[
@@ -1769,7 +1783,7 @@ const POOL_SBRA_INT = [
     ],
     finalAnswer:{ tex:'8' } },
 
-  { id:'sbra-i-arctan',
+  { id:'sbra-i-arctan', clo:'CLO5',
     title:'สูตรมาตรฐาน — \\(\\int\\dfrac{1}{x^2+1}\\,dx\\)',
     problem:'\\int\\dfrac{1}{x^2+1}\\,dx',
     steps:[
@@ -1806,7 +1820,7 @@ const POOL_SBRA_INT = [
     ],
     finalAnswer:{ tex:'\\arctan x + C' } },
 
-  { id:'sbra-i-area',
+  { id:'sbra-i-area', clo:'CLO6',
     title:'พื้นที่ระหว่าง \\(y=x\\) และ \\(y=x^2\\)',
     problem:'\\text{หา area ระหว่าง }y=x,\\ y=x^2\\text{ บน }[0,1]',
     steps:[

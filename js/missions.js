@@ -847,7 +847,11 @@
 
     function runningSolutionHtml() {
       const rows = [];
-      rows.push(`<div class="sbra-running-head">🧾 วิธีทำที่คุณกำลังสร้าง <span class="sbra-muted">(ยังไม่เฉลยจนกว่าจะส่ง)</span></div>`);
+      rows.push(`<div class="sbra-running-head">🧾 วิธีทำที่คุณกำลังสร้าง <span class="sbra-muted">(ยังไม่เฉลยจนกว่าจะส่ง)</span>${
+        mission.realClo
+          ? ` <span class="sbra-clo-chip" title="${mission.realCloLabel||''}">${mission.realClo}</span>`
+          : ''
+      }</div>`);
       rows.push(`<div class="sbra-running-line problem">โจทย์: \\(${mission.problem}\\)</div>`);
       shuffledSteps.forEach((s, i) => {
         const st = state[i];
@@ -1235,6 +1239,11 @@
         ? (SBRA_STRATEGIES[picked.id] || null)
         : null;
       m.pickedId = picked.id;
+      // real course CLO (CLO1–CLO6) — single grouped taxonomy used across SBRA pools
+      m.realClo      = picked.clo || null;
+      m.realCloLabel = (m.realClo && typeof REAL_CLOS !== 'undefined' && REAL_CLOS)
+        ? REAL_CLOS[m.realClo] || null
+        : null;
     }
     return m;
   }
