@@ -580,8 +580,23 @@
     }
 
     // ── Inline name editing ──
+    // Restore the row to its "display" shape. Needed before renderIdentity()
+    // because renderIdentity looks up #identity-name, which is replaced while
+    // editing. Without this, saving/cancelling would crash silently and the
+    // row would stay stuck in edit mode.
+    function restoreNameRow() {
+      const row = document.getElementById('identity-name-row');
+      if (!row) return;
+      row.innerHTML = `
+        <span class="identity-name placeholder" id="identity-name" tabindex="0"
+              title="คลิกเพื่อตั้งชื่อ">ยังไม่ได้ตั้งชื่อ — คลิกเพื่อตั้งชื่อ</span>
+        <button class="identity-name-edit-btn" id="identity-name-edit">✏ แก้ไข</button>
+      `;
+    }
+
     function startEditName() {
       const row = document.getElementById('identity-name-row');
+      if (!row) return;
       const current = getLearnerName();
       row.innerHTML = `
         <input type="text" class="identity-name-input" id="identity-name-input"
@@ -593,19 +608,24 @@
       input.focus();
       input.select();
 
+      const exitEdit = () => {
+        restoreNameRow();   // put span + edit button back
+        renderIdentity();   // update text + placeholder class
+        wireNameEditor();   // re-attach click handlers to the new nodes
+      };
+
       const save = () => {
         const v = setLearnerName(input.value);
-        renderIdentity();
-        wireNameEditor();
+        exitEdit();
         if (v) showToast(`ยินดีต้อนรับ ${v}!`, '👋');
       };
-      const cancel = () => { renderIdentity(); wireNameEditor(); };
+      const cancel = () => { exitEdit(); };
 
       document.getElementById('identity-save').addEventListener('click', save);
       document.getElementById('identity-cancel').addEventListener('click', cancel);
       input.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') save();
-        if (e.key === 'Escape') cancel();
+        if (e.key === 'Enter')  { e.preventDefault(); save(); }
+        if (e.key === 'Escape') { e.preventDefault(); cancel(); }
       });
     }
 
