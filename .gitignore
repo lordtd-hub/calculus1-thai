@@ -6,15 +6,9 @@ Thumbs.db
 .idea/
 .claude/
 
-# Local-only handoff notes, project reviews, and problem-source material
-# (keep these local — not part of the shipping app)
-CAULD_HANDOFF_NOTE.md
-CAULD_PROJECT_REVIEW.md
-bloom_problem_bank.tex
-randomized_20_student_calculus_pack.tex
-sbra_routine_computation_bank.md
-sectioned_calculus_problem_bank.tex
-MOBILE_RESPONSIVENESS_PLAN.md
+# Private working notes, source problem material, review docs
+# (anything in notes/ is local-only and never shipped)
+notes/
 
 # LaTeX build artifacts
 *.aux
