@@ -7,8 +7,9 @@ Thumbs.db
 .claude/
 
 # Private working notes, source problem material, review docs
-# (anything in notes/ is local-only and never shipped)
-notes/
+# (anything in root notes/ is local-only and never shipped)
+# Leading slash = root-only match, so content/*/notes/ stays tracked
+/notes/
 
 # LaTeX build artifacts
 *.aux
